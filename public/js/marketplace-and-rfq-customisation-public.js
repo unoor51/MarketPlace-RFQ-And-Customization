@@ -28,12 +28,5 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	$('#wk-seller-subscribe-email').on('click', function () {
-        if($('#wk-seller-subscribe-email').prop('checked')){
-			$("#subscribed-country").attr('required','required');
-            $("#subscribed_country").show(500);
-        }else{
-            $("#subscribed_country").hide(500);
-        }
-    });
+	
 })( jQuery );
