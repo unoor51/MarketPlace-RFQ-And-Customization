@@ -67,7 +67,10 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		add_action('womprfq_manage_rfq_template_before_content',array($this,  'add_country_dropdown'),30,4 );
 
 		add_filter( 'womprfq_get_seller_quotations', array( $this, 'get_quote_data_template' ), 10);
-
+		// Get main quote
+		add_filter( 'womprfq_get_country_for_main_quote', array($this,  'get_country_for_main_quote'), 10,2);
+		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-submit-quotation.php';
+		
 	}
 
 	/**
@@ -415,5 +418,27 @@ class Marketplace_And_Rfq_Customisation_Admin {
 			}
 		}
 		return apply_filters( 'womprfq_get_quote_meta_info', $res, $qid );
+	}
+	/**
+	 * Display country inside main quote table
+	 *
+	 * @since    1.0.0
+	*/
+	public function get_country_for_main_quote($sh_data,$quote_d){ 
+		$country = WC()->countries->countries[ $quote_d['quotation_country'] ];
+		$state = WC()->countries->get_states( $quote_d['quotation_country'] )[$quote_d['quotation_state']];
+		if ( isset( $quote_d['quotation_country'] ) ) {
+			 $sh_data['country'] = array(
+				 'title' => esc_html__( 'Deliver To', 'wk-mp-rfq' ),
+				 'value' => $country,
+			 );
+			// if ( !empty($state) ) {
+			// 	$sh_data['state'] = array(
+			// 		 'title' => esc_html__( 'Region/State', 'wk-mp-rfq' ),
+			// 		 'value' => $state,
+			// 	 );
+			// }
+		}
+		return $sh_data;
 	}
 }
