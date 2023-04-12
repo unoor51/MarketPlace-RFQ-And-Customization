@@ -70,7 +70,8 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		// Get main quote
 		add_filter( 'womprfq_get_country_for_main_quote', array($this,  'get_country_for_main_quote'), 10,2);
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-submit-quotation.php';
-		
+		// Seller Order History
+		add_filter('wkmp_order_list',array($this,  'order_list_history_template'));
 	}
 
 	/**
@@ -127,6 +128,15 @@ class Marketplace_And_Rfq_Customisation_Admin {
 	public function add_extra_fields_to_profile_form($seller_info ){
 		require_once plugin_dir_path(__DIR__).'templates/seller/profile.php';
 	}
+	/**
+	 * Order history template
+	 *
+	 * @since    1.0.0
+	 */
+	public function order_list_history_template(){
+		return plugin_dir_path(__DIR__).'templates/seller/orders/order-list.php';
+	}
+
 	/**
 	 * Save country field to the seller meta table
 	 *
