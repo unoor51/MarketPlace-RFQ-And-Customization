@@ -69,9 +69,13 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		add_filter( 'womprfq_get_seller_quotations', array( $this, 'get_quote_data_template' ), 10);
 		// Get main quote
 		add_filter( 'womprfq_get_country_for_main_quote', array($this,  'get_country_for_main_quote'), 10,2);
+		// Quotation submit
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-submit-quotation.php';
 		// Seller Order History
 		add_filter('wkmp_order_list',array($this,  'order_list_history_template'));
+		// handle cancel button on RFQ
+		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-cancel-button.php';
+		
 	}
 
 	/**

@@ -28,5 +28,29 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	
+	jQuery(document).on('click', '.markasclosed', function(e){
+        e.preventDefault();
+        let id = jQuery(this).data('id');
+        let product = jQuery(this).data('product');
+        if(confirm('By cancelling, you\'ll no longer offers for this request. Any existing offers will move to Closed status.')){
+            jQuery('#wk-mp-loader-rfq').removeClass('hide');
+            jQuery('#wk-mp-loader-rfq').show();
+            jQuery.ajax({
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                async: false,
+                type: "POST",
+                data: {
+                    action: 'change_rfq_status',
+                    id: id,
+                    product:product,
+                },
+                success: function(data) {
+                window.location.reload();
+                },
+                error: function(errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    });
 })( jQuery );
