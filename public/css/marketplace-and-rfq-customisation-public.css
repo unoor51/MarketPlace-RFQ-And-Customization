@@ -153,7 +153,101 @@
     transform: rotate(360deg)
   }
 }
+
 /*cancel button css end*/
+
+/*New Add RFQ template css*/
+#wpmp-rfq-new-quote-form .input {
+    width: 100% !important;
+    border-color: #edecec !important;
+    margin-bottom: 5px !important;
+}
+
+#wpmp-rfq-new-quote-form label {
+    margin-bottom: 0;
+    font-weight: bolder;
+    color: var(--e-global-color-primary );
+    font-family: "Syne", Sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 2.6em;
+}
+
+#wpmp-rfq-new-quote-form .description {
+    display: block;
+    font-size: small;
+    color: #808080;
+    margin-top: -4px;
+    margin-bottom: 4px;
+    font-weight: 300;
+    font-family: Inter, sans-serif;
+}
+
+#wpmp-rfq-new-quote-form .wpmp-rfq-form-upload-button {
+    font-size: 14px;
+}
+
+#wpmp-rfq-new-quote-form #wpmp-rfq-form-upload-button::before {
+    font-size: 14px;
+}
+
+#wpmp-rfq-new-quote-form .required {
+    color: #d83810;
+}
+
+#wpmp-rfq-new-quote-form .input-submit {
+    background-color: #24B1CF !important;
+    color: white !important;
+    line-height: 20px !important;
+    height: 50px !important;
+    font-size: 16px !important;
+    padding: 0px 22px !important;
+    border: none !important;
+}
+
+#wpmp-rfq-new-quote-form .bg-image-container {
+    width: 30%;
+    padding: 15% 0px 0px 30px;
+    display: block;
+    float: right !important;
+}
+
+#wpmp-rfq-new-quote-form .form-table {
+    width: 75% !important;
+}
+
+#wpmp-rfq-new-quote-form .submit-box {
+    padding-right: 6%;
+}
+#wpmp-rfq-new-quote-form .forminp {
+    width: 100%;
+    background-color: #fff;
+}
+#wpmp-rfq-new-quote-form #billing-country{
+    max-width: 95%;
+}
+#wpmp-rfq-new-quote-form #wpmp-rfq-form-sample-img{
+    display: none;
+}
+.wk-mp-rfq-header h2 {
+    font-family: Syne, sans-serif;
+}
+@media screen and (max-width: 768px) {
+    .bg-image-container {
+        width: 0%;
+        padding: 0px;
+        display: none;
+    }
+
+    .form-table {
+        width: 100% !important;
+    }
+
+    .submit-box {
+        padding-right: 7%;
+    }
+}
+/*Add new form css end*/
 @media only screen and (max-width: 767px){
     #main_container{
         display:block;
