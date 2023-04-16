@@ -77,11 +77,16 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		* Manage seller quotation related quries
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-seller-quotation.php';
+		// Add columns to main table
+		add_filter('womprfq_list_quote_columns',array($this,'list_quote_columns'));
+		// Add columns data to main quote table
+		add_action('womprfq_list_main_quote_data',array($this,'list_main_quote_data'),10,4 );
 		/*
 		* Manage customer quotations related quries
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-customer-quotations.php';
 	}
+
 
 	public function seller_edit_quotation_save_form_field($status,$seller_data){
 		// JS edit: Add  name of personal shopper on quote display
@@ -368,5 +373,39 @@ class Marketplace_And_Rfq_Customisation_Admin {
 			// }
 		}
 		return $sh_data;
+	}
+
+	/**
+	 * Add main quoatation columns
+	 *
+	 * @param    $quote_columns  Columns
+	 * @since    1.0.0
+	*/
+	public function list_quote_columns($quote_columns){
+		unset($quote_columns['quote-actions']);
+		$quote_columns['quontes-recieved'] = esc_html__( 'Offers', 'wk-mp-rfq' );
+
+		$quote_columns['quote-actions'] = esc_html__( 'Actions', 'wk-mp-rfq' );
+		return $quote_columns;
+	}
+	/**
+	 * Add main quotation columns data
+	 *
+	 * @param    $quote_columns  Columns
+	 * @since    1.0.0
+	*/
+	public function list_main_quote_data($roles,$current_login_user_id,$main_creator_ID,$data){
+
+		if($roles[0]=='customer' || ($current_login_user_id == $main_creator_ID) ){
+			global $wpdb;                                                         
+			$query1c = $wpdb->prepare( "SELECT count(*) as count FROM ".$wpdb->prefix."womprfq_seller_quotation WHERE main_quotation_id = ".$data['id'] );                                                
+			$resc    = $wpdb->get_results( $query1c );
+			?>
+			<td class="woocommerce-orders-table__cell "  >
+			<?php echo $resc[0]->count; ?>
+			</td>
+		<?php }else{ ?>
+			<td class="woocommerce-orders-table__cell "  > NA </td>
+		<?php } 
 	}
 }

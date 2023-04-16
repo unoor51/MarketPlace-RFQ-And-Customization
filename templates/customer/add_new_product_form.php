@@ -4,7 +4,7 @@
 			<?php echo ucfirst( esc_html__( 'Add New Product RFQ', 'wk-mp-rfq' ) ); //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
 		</h2>
 	</div>
-	<div id="main_container" class="wk_transaction woocommerce-MyAccount-content wk-mp-rfq" style="display: contents;">
+	<div id="main_container" class="wk_transaction woocommerce-MyAccount-content wm-mp-rfq" style="display: contents;">
 		<form method="POST" id="wpmp-rfq-new-quote-form" class="wpmp-rfq-new-quote-form" action=""
 						style="display: flex;flex-direction: row;">
 			<table class="form-table wc_status_table widefat">
@@ -37,6 +37,25 @@
 					</tr>
 					<tr valign="top">
 						<td class="forminp">
+							<div style="margin-right: 10%;">
+								<label for="qdesc"><?php esc_html_e( 'Add Sample Image', 'wk-mp-rfq' ); ?></label>
+								<span class="description">Optional (max 200kb)</span>
+							</div>
+							<div>
+								<div id="wpmp-rfq-form-image">
+								</div>
+								<input type="hidden"  id="wpmp-rfq-form-sample-img" name="wpmp-rfq-form-sample-img" />
+								<p>
+									<a class="wpmp-rfq-form-upload-button" id="wpmp-rfq-form-upload-button" data-type-error="<?php echo esc_attr__( 'Only jpg|png|jpeg files are allowed.', 'wk-mp-rfq' ); ?>" href="javascript:void(0);" />
+										<?php esc_html_e( 'Add Images', 'wk-mp-rfq' ); ?>
+									</a>
+								</p>
+							</div>
+							<div id="wpmp-rfq-form-sample-img-error" class="error-class"></div>
+						</td>
+					</tr>
+					<tr valign="top">
+						<td class="forminp">
 							<label for="deliver"><?php esc_html_e( 'Deliver To', 'marketplace-and-rfq-customisation' ); ?></label>
 						<span class="required">*</span>
 						<span class="description"><?php esc_html_e( 'Select Deliver Place.', 'marketplace-and-rfq-customisation' ); ?></span>
@@ -55,25 +74,6 @@
 							<?php } ?>
 						</select>
 						<?php echo wc_help_tip( esc_html__( 'Select Country to quote.', 'wk-mp-rfq' ), false ); ?>
-						</td>
-					</tr>
-					<tr valign="top">
-						<td class="forminp">
-							<div style="margin-right: 10%;">
-								<label for="qdesc"><?php esc_html_e( 'Add Sample Image', 'wk-mp-rfq' ); ?></label>
-								<span class="description">Optional (max 200kb)</span>
-							</div>
-							<div>
-								<div id="wpmp-rfq-form-image">
-								</div>
-								<input type="file"  id="wpmp-rfq-form-sample-img" name="wpmp-rfq-form-sample-img" />
-								<p>
-									<a class="wpmp-rfq-form-upload-button" id="wpmp-rfq-form-upload-button" data-type-error="<?php echo esc_attr__( 'Only jpg|png|jpeg files are allowed.', 'wk-mp-rfq' ); ?>" href="javascript:void(0);" />
-										<?php esc_html_e( 'Add Images', 'wk-mp-rfq' ); ?>
-									</a>
-								</p>
-							</div>
-							<div id="wpmp-rfq-form-sample-img-error" class="error-class"></div>
 						</td>
 					</tr>
 					<?php 
@@ -134,3 +134,8 @@
 		display: contents !important;
 	}
 </style>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.wk-mp-rfq').remove();
+	});
+</script>
