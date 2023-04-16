@@ -21,7 +21,7 @@ if ( ! class_exists( 'Womprfq_customer_Quotation' ) ) {
 		public function customer_endpoint_template(){
 			$attributes = $this->womprfq_get_attribute_info();
 			require_once plugin_dir_path(__DIR__).'templates/customer/add_new_product_form.php';
-			die();
+			// die();
 		}
 		/**
 		 * Save quotation meta

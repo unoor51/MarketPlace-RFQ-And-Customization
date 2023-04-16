@@ -48,11 +48,11 @@ class Marketplace_And_Rfq_Customisation_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
+		$uri = $_SERVER['REQUEST_URI'];
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		/*
-		* Manage seller related quries
+		* Manage seller profile related quries
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-seller-profile.php';
 
@@ -68,13 +68,36 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		add_filter('wkmp_order_list',array($this,  'order_list_history_template'));
 		// handle cancel button on RFQ
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-cancel-button.php';
+		// handle seller edit quotation form
 		
+		if (strpos($uri, 'seller-quote') !== false) {
+		    add_action('womprfq_seller_edit_quotation_save_form_field', array($this,  'seller_edit_quotation_save_form_field'),10,2 );
+		}
+		/*
+		* Manage seller quotation related quries
+		*/
+		require_once __dir__.'/class-marketplace-and-rfq-customisation-seller-quotation.php';
 		/*
 		* Manage customer quotations related quries
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-customer-quotations.php';
 	}
 
+	public function seller_edit_quotation_save_form_field($status,$seller_data){
+		// JS edit: Add  name of personal shopper on quote display
+		$seller_details = get_userdata($seller_data->seller_id);
+		$seller_shopname= get_usermeta( $seller_data->seller_id,'display_name' ); ?>
+		<tr class="order_item alt-table-row">
+			<td colspan="2" class="product-name toptable">
+		 		<strong>
+		 		Personal shopper
+		 		</strong>
+		 	</td>
+		 	<td colspan="2" class="product-total toptable">
+		 		<a href="<?php echo site_url(); ?>/seller/seller-recent-products/<?php  echo $seller_shopname; ?>"><?php echo $seller_shopname; ?></a>
+		 	</td>
+		</tr>
+	<?php }
 
 	/**
 	 * Register the stylesheets for the admin area.
