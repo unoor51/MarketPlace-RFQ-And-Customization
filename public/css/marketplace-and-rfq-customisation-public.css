@@ -153,7 +153,10 @@
     transform: rotate(360deg)
   }
 }
-
+/*Display tab on seller profile page*/
+#wkmp-shop-tab {
+  display: block;
+}
 /*cancel button css end*/
 
 /*New Add RFQ template css*/

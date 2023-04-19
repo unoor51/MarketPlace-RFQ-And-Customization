@@ -81,12 +81,20 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		add_filter('womprfq_list_quote_columns',array($this,'list_quote_columns'));
 		// Add columns data to main quote table
 		add_action('womprfq_list_main_quote_data',array($this,'list_main_quote_data'),10,4 );
+
+		// Seller Profile Tabs
+		add_filter('wkmp_seller_front_profile_tabs',array($this,'seller_front_profile_tabs'));
+		
 		/*
 		* Manage customer quotations related quries
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-customer-quotations.php';
 	}
 
+	public function seller_front_profile_tabs($tabs){
+    	$tabs = array();
+		return $tabs;
+	}
 
 	public function seller_edit_quotation_save_form_field($status,$seller_data){
 		// JS edit: Add  name of personal shopper on quote display
