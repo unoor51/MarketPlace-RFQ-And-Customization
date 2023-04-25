@@ -97,6 +97,11 @@ class Marketplace_And_Rfq_Customisation_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/marketplace-and-rfq-customisation-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name, 'frontend_ajax_object',
+			array( 
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			)
+		);
 
 	}
 

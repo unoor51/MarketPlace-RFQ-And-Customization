@@ -5,7 +5,7 @@ if ( ! class_exists( 'Womprfq_Cancel_Button_Handler' ) ) {
 	 * Load front side functions.
 	 */
 	class Womprfq_Cancel_Button_Handler {
-		public function __construct() { die("as");
+		public function __construct() { 
 			// Change RFQ status for logged in users
 			add_action('wp_ajax_change_rfq_status', array($this,'change_rfq_status') );
 			// Change RFQ status for non logged in users
@@ -160,5 +160,6 @@ if ( ! class_exists( 'Womprfq_Cancel_Button_Handler' ) ) {
 			//End 
 		}
 	}
+	new Womprfq_Cancel_Button_Handler();
 }
 ?>

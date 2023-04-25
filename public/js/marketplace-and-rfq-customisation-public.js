@@ -28,7 +28,8 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	jQuery(document).on('click', '.markasclosed', function(e){
+	
+   jQuery(document).on('click', '.markasclosed', function(e){
         e.preventDefault();
         let id = jQuery(this).data('id');
         let product = jQuery(this).data('product');
@@ -36,7 +37,7 @@
             jQuery('#wk-mp-loader-rfq').removeClass('hide');
             jQuery('#wk-mp-loader-rfq').show();
             jQuery.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                url: frontend_ajax_object.ajaxurl,
                 async: false,
                 type: "POST",
                 data: {
@@ -53,6 +54,5 @@
             });
         }
     });
-   
 
 })( jQuery );

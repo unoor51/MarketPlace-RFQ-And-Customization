@@ -155,7 +155,7 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/marketplace-and-rfq-customisation-admin.js', array( 'jquery' ), $this->version, false );
-
+		
 	}
 	
 	/**
