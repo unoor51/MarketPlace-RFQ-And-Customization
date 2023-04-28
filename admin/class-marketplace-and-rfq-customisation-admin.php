@@ -66,6 +66,9 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-submit-quotation.php';
 		// Seller Order History
 		add_filter('wkmp_order_list',array($this,  'order_list_history_template'));
+		// Seller Order Views
+		add_filter('wkmp_order_views',array($this,  'order_views_history_template'));
+
 		// handle cancel button on RFQ
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-admin-cancel-button.php';
 		// handle seller edit quotation form
@@ -90,7 +93,7 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		*/
 		require_once __dir__.'/class-marketplace-and-rfq-customisation-customer-quotations.php';
 	}
-
+	// Remove seller profile Tabs
 	public function seller_front_profile_tabs($tabs){
     	$tabs = array();
 		return $tabs;
@@ -166,7 +169,15 @@ class Marketplace_And_Rfq_Customisation_Admin {
 	public function order_list_history_template(){
 		return plugin_dir_path(__DIR__).'templates/seller/orders/order-list.php';
 	}
-
+	/**
+	 * Order views template
+	 *
+	 * @since    1.0.0
+	 */
+	public function order_views_history_template(){
+		return plugin_dir_path(__DIR__).'templates/seller/orders/order-views.php';
+	}
+	
 	/**
 	 * Add country dropdown before seller template table
 	 *
