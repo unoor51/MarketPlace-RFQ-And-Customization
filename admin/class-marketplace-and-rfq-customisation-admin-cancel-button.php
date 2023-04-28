@@ -68,7 +68,7 @@ if ( ! class_exists( 'Womprfq_Cancel_Button_Handler' ) ) {
 										<p>Offer #' . $seller->id. '</p>
 										<p>Buyer: ' . $customer_name . '</p>
 										<p>Item: ' . $product . '</p>
-										<p>Deliver To: '. esc_html( WC()->countries->countries[ $meta->quotation_country ] ) . '</p>
+										<p>Deliver To: '. esc_html( WC()->countries->countries[ $meta['quotation_country'] ] ) . ' - '.esc_html($meta['wpmp-rfq-admin-quote-city']). '</p>
 									</td>
 								</tr>  
 								<tr>
