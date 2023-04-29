@@ -87,7 +87,7 @@ class Marketplace_And_Rfq_Customisation_Admin {
 
 		// Seller Profile Tabs
 		add_filter('wkmp_seller_front_profile_tabs',array($this,'seller_front_profile_tabs'));
-		
+		add_filter('add_attribute_type',array($this,'add_attribute_type_function'));
 		/*
 		* Manage customer quotations related quries
 		*/
@@ -97,6 +97,15 @@ class Marketplace_And_Rfq_Customisation_Admin {
 	public function seller_front_profile_tabs($tabs){
     	$tabs = array();
 		return $tabs;
+	}
+	// Add attribute type function
+	public function add_attribute_type_function($fieldtype){
+		/* JS edit: Add attribute type Date */
+		$fieldtype[] = array(
+			'type'  => 'date',
+			'title' => esc_html__( 'Date', 'wk-mp-rfq' ),
+		);
+		return $fieldtype;
 	}
 
 	public function seller_edit_quotation_save_form_field($status,$seller_data){
