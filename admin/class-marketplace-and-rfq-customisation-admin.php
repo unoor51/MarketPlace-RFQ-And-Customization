@@ -88,6 +88,9 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		// Seller Profile Tabs
 		add_filter('wkmp_seller_front_profile_tabs',array($this,'seller_front_profile_tabs'));
 		add_filter('add_attribute_type',array($this,'add_attribute_type_function'));
+
+		add_filter( 'woocommerce_my_account_my_orders_actions', array($this,'msoa_mark_as_received' ), 10, 2 );
+
 		/*
 		* Manage customer quotations related quries
 		*/
@@ -435,5 +438,88 @@ class Marketplace_And_Rfq_Customisation_Admin {
 		<?php }else{ ?>
 			<td class="woocommerce-orders-table__cell "  > NA </td>
 		<?php } 
+	}
+
+	public function msoa_mark_as_received( $actions, $order ) {
+		$order_id = $order->id;
+
+	    if ( ! is_object( $order ) ) {
+	        $order_id = absint( $order );
+	        $order    = wc_get_order( $order_id );
+	    }
+	    
+	    // check if order status delivered and form not submitted
+
+		if ( ( $order->has_status( 'delivered' ) ) && ( !isset( $_POST['mark_as_received'] ) ) ) {
+			$check_received = ( $order->has_status( 'delivered' ) ) ? "true" : "false";
+		    ?>
+		    <div class="ms-mark-as-received">
+			    <form method="post">
+					<input type="hidden" name="mark_as_received" value="<?php echo esc_attr( $check_received ); ?>">
+					<input type="hidden" name="order_id" value="<?php echo esc_attr($order_id);?>">
+					<?php wp_nonce_field( 'so_38792085_nonce_action', '_so_38792085_nonce_field' ); ?> 
+					<input class="int-button-small" type="submit" value="<?php echo esc_attr_e( 'Mark as Received', 'order-approval' ); ?>" data-toggle="tooltip" title="<?php echo esc_attr_e( 'Click to mark the order as complete if you have received the product', 'order-approval' ); ?>">
+				</form>
+		    </div>
+		    <?php
+		}
+
+	    /*
+	    //refresh page if form submitted
+
+	    * fix status not updating
+	    */
+	    if( isset( $_POST['mark_as_received'] ) ) { 
+	        echo "<meta http-equiv='refresh' content='0'>";
+	    }
+
+		// not a "mark as received" form submission
+	    if ( ! isset( $_POST['mark_as_received'] ) ){
+	        return $actions;
+	    }
+
+	    // basic security check
+	    if ( ! isset( $_POST['_so_38792085_nonce_field'] ) || ! wp_verify_nonce( $_POST['_so_38792085_nonce_field'], 'so_38792085_nonce_action' ) ) {   
+	        return $actions;
+	    } 
+
+	    // make sure order id is submitted
+	    if ( ! isset( $_POST['order_id'] ) ){
+	        $order_id = intval( $_POST['order_id'] );
+	        $order = wc_get_order( $order_id );
+	        $order->update_status( "completed" );
+	        return $actions;
+	    }  
+	    if ( isset( $_POST['mark_as_received'] ) == true ) {
+	    	$order_id = intval( $_POST['order_id'] );
+	        $order = wc_get_order( $order_id );
+	        $order->update_status( "completed" );
+	    }
+
+	    $actions = array(
+	        'pay'    => array(
+	            'url'  => $order->get_checkout_payment_url(),
+	            'name' => __( 'Pay', 'woocommerce' ),
+	        ),
+	        'view'   => array(
+	            'url'  => $order->get_view_order_url(),
+	            'name' => __( 'View', 'woocommerce' ),
+	        ),
+	        'cancel' => array(
+	            'url'  => $order->get_cancel_order_url( wc_get_page_permalink( 'myaccount' ) ),
+	            'name' => __( 'Cancel', 'woocommerce' ),
+	        ),
+	    );
+
+	    if ( ! $order->needs_payment() ) {
+	        unset( $actions['pay'] );
+	    }
+
+	    if ( ! in_array( $order->get_status(), apply_filters( 'woocommerce_valid_order_statuses_for_cancel', array( 'pending', 'failed' ), $order ), true ) ) {
+	        unset( $actions['cancel'] );
+	    }
+
+	    return $actions;
+
 	}
 }
